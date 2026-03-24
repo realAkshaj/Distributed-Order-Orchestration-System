@@ -1,0 +1,5 @@
+CREATE SCHEMA IF NOT EXISTS orchestrator;
+CREATE SCHEMA IF NOT EXISTS order_service;
+CREATE SCHEMA IF NOT EXISTS payment_service;
+CREATE SCHEMA IF NOT EXISTS inventory_service;
+CREATE SCHEMA IF NOT EXISTS notification_service;
