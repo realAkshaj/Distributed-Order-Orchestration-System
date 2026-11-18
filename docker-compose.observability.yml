@@ -1,0 +1,41 @@
+x-otel: &otel
+  JAVA_TOOL_OPTIONS: >-
+    -javaagent:/otel/opentelemetry-javaagent.jar
+    -Dotel.exporter.otlp.endpoint=http://tempo:4317
+    -Dotel.exporter.otlp.protocol=grpc
+    -Dotel.traces.exporter=otlp
+    -Dotel.metrics.exporter=none
+    -Dotel.logs.exporter=none
+    -Dotel.propagators=tracecontext,baggage
+
+services:
+  tempo:
+    image: grafana/tempo:2.6.1
+    command: ["-config.file=/etc/tempo.yaml"]
+    volumes:
+      - ./observability/tempo.yaml:/etc/tempo.yaml
+    ports:
+      - "3200:3200"
+
+  grafana:
+    image: grafana/grafana:11.3.0
+    ports:
+      - "3000:3000"
+    environment:
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Admin
+    volumes:
+      - ./observability/grafana/datasources:/etc/grafana/provisioning/datasources
+    depends_on:
+      - tempo
+
+  orchestrator:
+    environment: { <<: *otel, OTEL_SERVICE_NAME: orchestrator }
+  order-service:
+    environment: { <<: *otel, OTEL_SERVICE_NAME: order-service }
+  payment-service:
+    environment: { <<: *otel, OTEL_SERVICE_NAME: payment-service }
+  inventory-service:
+    environment: { <<: *otel, OTEL_SERVICE_NAME: inventory-service }
+  notification-service:
+    environment: { <<: *otel, OTEL_SERVICE_NAME: notification-service }
