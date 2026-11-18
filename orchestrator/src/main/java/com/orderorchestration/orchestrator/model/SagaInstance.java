@@ -1,7 +1,10 @@
 package com.orderorchestration.orchestrator.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.UUID;
 
 @Entity
@@ -23,8 +26,9 @@ public class SagaInstance {
     @Column(name = "current_step", length = 50)
     private String currentStep;
 
+    @JdbcTypeCode(SqlTypes.JSON)
     @Column(name = "payload", columnDefinition = "jsonb")
-    private String payload;
+    private Map<String, Object> payload;
 
     @Column(name = "failure_reason", length = 500)
     private String failureReason;
@@ -78,11 +82,11 @@ public class SagaInstance {
         this.currentStep = currentStep;
     }
 
-    public String getPayload() {
+    public Map<String, Object> getPayload() {
         return payload;
     }
 
-    public void setPayload(String payload) {
+    public void setPayload(Map<String, Object> payload) {
         this.payload = payload;
     }
 
