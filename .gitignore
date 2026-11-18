@@ -17,3 +17,4 @@ target/
 Thumbs.db
 order-orchestration-build-plan.pdf
 order-orchestration-build-plan.docx
+!.mvn/wrapper/maven-wrapper.jar
