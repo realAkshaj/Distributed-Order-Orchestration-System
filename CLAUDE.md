@@ -1,5 +1,8 @@
 # Distributed Order Orchestration System — Build Skill
 
+> **Update:** RabbitMQ was replaced by Apache Kafka, and a `common` module (messaging types, transactional outbox, Kafka config) plus a React `dashboard/` were added. Phases 3-6 below describe the original RabbitMQ design; see README.md for the current architecture.
+
+
 ## Project Overview
 
 Build a production-grade distributed backend system in Java 21 + Spring Boot 3.3. Five microservices coordinate an e-commerce order workflow via saga orchestration over RabbitMQ. Deployed to Railway (free tier).
