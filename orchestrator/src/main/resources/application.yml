@@ -1,4 +1,6 @@
 spring:
+  config:
+    import: classpath:common.yml
   application:
     name: orchestrator
   datasource:
@@ -9,21 +11,16 @@ spring:
       schema: ${DB_SCHEMA:orchestrator}
       maximum-pool-size: ${HIKARI_POOL_SIZE:20}
   jpa:
-    hibernate:
-      ddl-auto: validate
     properties:
       hibernate:
         default_schema: ${DB_SCHEMA:orchestrator}
-  rabbitmq:
-    addresses: ${RABBITMQ_URL:amqp://guest:guest@localhost:5672}
   flyway:
     schemas: ${DB_SCHEMA:orchestrator}
+    default-schema: ${DB_SCHEMA:orchestrator}
+  kafka:
+    consumer:
+      properties:
+        "[spring.json.value.default.type]": com.orderorchestration.common.messaging.SagaEvent
 
 server:
   port: 8080
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health,info,circuitbreakers,metrics

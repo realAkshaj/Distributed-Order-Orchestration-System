@@ -12,6 +12,13 @@
 
     <artifactId>notification-service</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.orderorchestration</groupId>
+            <artifactId>common</artifactId>
+        </dependency>
+    </dependencies>
+
     <build>
         <plugins>
             <plugin>

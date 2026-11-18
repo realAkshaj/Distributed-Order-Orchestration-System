@@ -1,4 +1,6 @@
 spring:
+  config:
+    import: classpath:common.yml
   application:
     name: order-service
   datasource:
@@ -9,21 +11,16 @@ spring:
       schema: ${DB_SCHEMA:order_service}
       maximum-pool-size: ${HIKARI_POOL_SIZE:20}
   jpa:
-    hibernate:
-      ddl-auto: validate
     properties:
       hibernate:
         default_schema: ${DB_SCHEMA:order_service}
-  rabbitmq:
-    addresses: ${RABBITMQ_URL:amqp://guest:guest@localhost:5672}
   flyway:
     schemas: ${DB_SCHEMA:order_service}
+    default-schema: ${DB_SCHEMA:order_service}
+  kafka:
+    consumer:
+      properties:
+        "[spring.json.value.default.type]": com.orderorchestration.common.messaging.SagaCommand
 
 server:
   port: 8081
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health,info,metrics

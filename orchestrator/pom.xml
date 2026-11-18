@@ -14,8 +14,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>io.github.resilience4j</groupId>
-            <artifactId>resilience4j-spring-boot3</artifactId>
+            <groupId>com.orderorchestration</groupId>
+            <artifactId>common</artifactId>
         </dependency>
     </dependencies>
 
